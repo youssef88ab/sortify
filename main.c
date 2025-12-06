@@ -8,6 +8,23 @@ void swap (int *x , int *y) {
     *y = temp;
 }
 
+// * Partition Function
+int partition(int *array, int size) {
+    int pivot = array[size - 1];
+    int i = -1;
+
+    for (int j = 0; j < size - 1; j++) {
+        if (array[j] < pivot) {
+            i++;
+            swap(&array[i], &array[j]);
+        }
+    }
+
+    swap(&array[i + 1], &array[size - 1]);
+
+    return i + 1;   // pivot final index
+}
+
 // * Bubble Sort
 void bubbleSort (int *array , int size) {
     for (int i = 0 ; i < size - 1 ; i++) {
@@ -49,7 +66,16 @@ void insertionSort(int *array , int size) {
     }
 }
 
-// * Counting Sort
+// * Quick Sort
+void quickSort(int *array, int size) {
+    if (size <= 1) return;
+
+    int pivotIndex = partition(array, size);
+
+    quickSort(array, pivotIndex);
+    quickSort(array + pivotIndex + 1, size - pivotIndex - 1);
+}
+
 
 
 // * Print Table
@@ -65,7 +91,7 @@ int main() {
     int array[] = {2 , 3 , 5 , 1 ,7 ,9 ,4 ,6 ,8 ,10};
 
     printTable(array , 10);
-    selectionSort(array , 10);
+    quickSort(array , 10);
     printTable(array , 10);
 
     return 0;
